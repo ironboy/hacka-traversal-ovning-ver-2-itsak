@@ -7,12 +7,12 @@ const app = express();
 app.use(express.static('frontend'));
 
 app.get('/api/photolist', (req, res) => {
-  const list = fs.readdirSync(path.join(import.meta.dirname, 'images', req.query.folder));
+  const list = fs.readdirSync(path.join(import.meta.dirname, 'images', req.query.folder.replaceAll('..', '')));
   res.json(list);
 });
 
 app.get('/api/photo', (req, res) => {
-  res.sendFile(path.join(import.meta.dirname, 'images', req.query.file));
+  res.sendFile(path.join(import.meta.dirname, 'images', req.query.file.replaceAll('..', '')));
 });
 
 app.get('*', ((_req, res) =>
